@@ -5,6 +5,56 @@ import json
 
 class BusinessClientCore(ApiBase, OnboardMerchant):
 
+    def register_customer(self, reference_number,customer_firstname,
+                          customer_lastname, customer_phonenumber,
+                          customer_email, customer_date_of_birth ):
+        """
+                 Register Customer
+
+                 Parameters
+                 ----------
+                 reference_number : string
+                     reference_number: A unique reference
+                     number provided by the business
+
+                 customer_firstname : string
+                     customer_firstname: The first name of the customer
+
+                 customer_lastname: string
+                     customer_lastname: The last name of the customer
+
+                 customer_phonenumber: string
+                     customer_phonenumber: The phone number of the new customer.
+                                          This number must not belong to an existing registered customer
+
+                 customer_email: string
+                    customer_email: The email of the new customer
+
+                 customer_date_of_birth:
+                        customer_date_of_birth: Birth date of the customer
+             """
+
+        endpoint = 'paga-webservices/business-rest/secured/registerCustomer'
+
+        url = self._server_url() + endpoint
+
+        pattern = reference_number + customer_phonenumber + customer_firstname + customer_lastname
+
+        generated_hash = self._generate_hash(pattern)
+
+        data = {'referenceNumber': reference_number,
+                'customerFirstName': customer_firstname,
+                'customerPhoneNumber': customer_phonenumber,
+                'customerLastName': customer_lastname,
+                'customerEmail': customer_email,
+                'customerDateOfBirth': customer_date_of_birth}
+
+        json_data = json.dumps(data)
+
+        response = self._post_request('POST', url, generated_hash, json_data)
+
+        return response
+
     def money_transfer(self, reference_number, amount, currency,
                        destination_account, destination_bank,
                        sender_principal, sender_credentials,
@@ -332,6 +382,7 @@ class BusinessClientCore(ApiBase, OnboardMerchant):
 
         json_data = json.dumps(data)
 
+        assert isinstance(generated_hash, object)
         response = self._post_request('POST', url, generated_hash, json_data)
 
         return response

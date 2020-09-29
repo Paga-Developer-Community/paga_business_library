@@ -11,7 +11,7 @@ class TestBusinessClientCore(TestCase):
                                                    True, 'd98076e2d14c4045970edc466faa2ec8cc47c9b89b654001b5e4db27179a0b9559bee92b78034c558a9d24aca2fa4135db8938a3f4a74b7da1157dee68e15213')
 
     def test_money_transfer(self):
-        response = self.business_client_core.money_transfer("14525626", "110", "NGN", "+2348060075922", None, None,
+        response = self.business_client_core.money_transfer("3325626", "110", "NGN", "+2348060075922", None, None,
                                                        None, True, None, None, None, "NG", None, None, None)
 
         print(response)
@@ -26,8 +26,16 @@ class TestBusinessClientCore(TestCase):
 
         self.assertIsNotNone(response, True)
 
+    def test_register_customer(self):
+        response = self.business_client_core.register_customer("3453627211", "Babs1", "Owo1", "08090134578",
+                                                               "josingowo@gmail.com", "1987-01-10")
+
+        print(response)
+
+        self.assertIsNotNone(response, True)
+
     def test_get_merchants(self):
-        response = self.business_client_core.get_merchants("56377383", "NG")
+        response = self.business_client_core.get_merchants("56377383", "en")
 
         print(response)
 
@@ -35,7 +43,7 @@ class TestBusinessClientCore(TestCase):
 
     def test_get_merchant_services(self):
         response = self.business_client_core.get_merchant_services("45362772",
-                                                                   "A3878DC1-F07D-48E7-AA59-8276C3C26647",
+                                                                   "8E7485D9-1A67-4205-A49D-691E5B78C20D",
                                                                    "NG")
 
         print(response)
@@ -126,8 +134,8 @@ class TestBusinessClientCore(TestCase):
 
         response = self.business_client_core\
             .get_merchant_account_details("536782882",
-                                          "A3878DC1-F07D-48E7-AA59-8276C3C26647",
-                                          "4100029992", "ACCACC101")
+                                          "8E7485D9-1A67-4205-A49D-691E5B78C20D",
+                                          "4100029992", "PrePre101")
 
         print (response)
 

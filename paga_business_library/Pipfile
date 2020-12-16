@@ -4,11 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest = ">=3.7"
+pytest = ">=3.9"
 twine = "*"
 
 [packages]
 paga-business-client = {editable = true,path = "."}
 
 [requires]
-python_version = "3.7"
+python_version = "3.9"

@@ -10,7 +10,7 @@ class ApiBase(object):
 
     _CONTENT_TYPE = "application/json"
     _TEST_BASE_API_ENDPOINT = "https://beta.mypaga.com/"
-    _LIVE_BASE_API_ENDPOINT = "https://mypaga.com"
+    _LIVE_BASE_API_ENDPOINT = "https://www.mypaga.com/"
 
     def __init__(self, principal, credentials, is_test_server, api_key):
         """

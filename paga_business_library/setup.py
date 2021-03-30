@@ -28,7 +28,7 @@ setup(
     use_scm_version={
         'local_scheme': 'dirty-tag',
         'write_to': 'src/paga_business_client/_version.py',
-        'fallback_version': '0.0.4',
+        'fallback_version': '0.0.5',
     },
     license='MIT',
     description='Paga Business CLient',

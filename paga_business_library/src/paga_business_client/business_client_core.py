@@ -55,6 +55,116 @@ class BusinessClientCore(ApiBase, OnboardMerchant):
 
         return response
 
+    def register_persistent_payment_account(self, reference_number, phone_number, first_name, last_name,
+                                            email, account_name, financial_identification_number, account_reference):
+        """
+         Register Persistent Payment Account
+
+         Parameters
+         ----------
+         reference_number : string
+             reference_number: A unique reference number provided by the business
+
+         phone_number: string
+             phone_number: The phone number of the new customer.
+
+         first_name : string
+             first_name: The first name of the customer
+
+         last_name: string
+             last_name: The last name of the customer
+
+         email: string
+            email: The email of the new customer
+
+         account_name: string
+            account_name: Customer's desired account name
+
+         financial_identification_number: string
+            financial_identification_number: Customer's Bank verification Number (BVN)
+
+         account_reference: string
+            account_reference: This is a unique reference number provided by the Organization which identifies the
+            persistent account Number. It should have a minimum length of 12 characters and a maximum length of 30
+            characters
+        """
+        endpoint = 'paga-webservices/business-rest/secured/registerPersistentPaymentAccount'
+
+        url = self._server_url() + endpoint
+
+        pattern = reference_number + phone_number
+
+        generated_hash = self._generate_hash(pattern)
+
+        data = {'referenceNumber': reference_number,
+            'firstName': first_name,
+            'phoneNumber': phone_number,
+            'lastName': last_name,
+            'email': email,
+            'accountName': account_name,
+            'financialIdentificationNumber': financial_identification_number,
+            'accountReference': account_reference}
+
+        json_data = json.dumps(data)
+
+        response = self._post_request('POST', url, generated_hash, json_data)
+
+        return response
+
+
+    def get_persistent_payment_account_activity(self, reference_number,
+                            account_number,
+                            get_latest_single_activity,
+                            start_date, end_date, account_reference):
+
+        """
+            Get Persistent Payment Account Activity
+
+            Parameters
+            ----------
+            reference_number : string
+                reference_number: A unique reference number provided by the business
+
+            account_number : string
+                account_number: A valid Persistent Payment Account Number.
+
+            get_latest_single_activity : boolean
+                get_latest_single_activity: A flag if set to true would return only the last activity on the Persistent
+                Payment Account
+
+            start_date: string
+                start_date: The start date for which records are to be returned
+
+            end_date: string
+                end_date: The end date for which records are to be returned
+
+            account_reference: string
+                account_reference: The unique reference number provided by the organization which identifies the
+                Persistent Payment Account Number
+        """
+
+        endpoint = 'paga-webservices/business-rest/secured/getPersistentPaymentAccountActivity'
+
+        url = self._server_url() + endpoint
+
+        pattern = reference_number
+
+        generated_hash = self._generate_hash(pattern)
+
+        data = {'referenceNumber': reference_number,
+                'accountNumber': account_number,
+                'getLatestSingleActivity': get_latest_single_activity,
+                'startDate': start_date,
+                'endDate': end_date,
+                'accountReference': account_reference}
+
+        json_data = json.dumps(data)
+
+        response = self._post_request('POST', url, generated_hash, json_data)
+
+        return response
+
+
     def money_transfer(self, reference_number, amount, currency,
                        destination_account, destination_bank,
                        sender_principal, sender_credentials,
